@@ -1,12 +1,13 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App" :apiUrl="apiUrl"/>
+    <HelloWorld msg="Welcome to Your Vue.js App" :apiUrl="apiUrl" :todayDate="backendDate" />
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
   name: 'app',
@@ -15,9 +16,15 @@ export default {
   },
   data(){
     return {
-      apiUrl: process.env.VUE_APP_API_URL
+      apiUrl: process.env.APP_API_URL,
+      backendDate: ''
     }
-  }
+  },
+  mounted () {
+    axios
+      .get('http://localhost:3333')
+      .then(response => (this.backendDate = response))
+  },
 }
 </script>
 
